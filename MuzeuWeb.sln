@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MuzeuWeb", "MuzeuWeb.njsproj", "{A3D7F58E-2B49-41C6-8E73-9092AA53FB77}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F7C8A90B-7512-429C-A20D-261B44313514}"
+	ProjectSection(SolutionItems) = preProject
+		.env.example = .env.example
+		.gitignore = .gitignore
+		README.md = README.md
+		web.config = web.config
+		package.json = package.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3D7F58E-2B49-41C6-8E73-9092AA53FB77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D7F58E-2B49-41C6-8E73-9092AA53FB77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D7F58E-2B49-41C6-8E73-9092AA53FB77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D7F58E-2B49-41C6-8E73-9092AA53FB77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1E2F3A4-5C6D-7E8F-9A0B-1C2D3E4F5A6B}
+	EndGlobalSection
+EndGlobal
