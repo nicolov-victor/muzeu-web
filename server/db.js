@@ -50,7 +50,7 @@ export const MUSEUM_TABLES = {
   },
   monede: {
     table: 'Monede',
-    idCol: 'Id_Monede',
+    idCol: 'Id',
     labelRo: 'Numismatică & Monede',
     icon: 'fa-coins',
     fallbackImg: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
@@ -58,7 +58,7 @@ export const MUSEUM_TABLES = {
   },
   ceramica: {
     table: 'Ceramica',
-    idCol: 'Id_Ceramica',
+    idCol: 'Id',
     labelRo: 'Ceramică & Olarit Arheologic',
     icon: 'fa-jar',
     fallbackImg: 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?auto=format&fit=crop&w=1200&q=80',
@@ -286,29 +286,60 @@ export async function getAllUnified(categoryFilter = null, search = null) {
       if (!meta) continue;
 
       try {
+        let titleExpr = 'ISNULL(TITLU, DENUMIRE)';
+        let locExpr = 'LOC_PASTR';
+        let descExpr = 'DESCRIERE';
+        let creatorExpr = 'ISNULL(AUTOR, ISNULL(ATELIER, ISNULL(STAT_EMIT, ISNULL(PERSONALIT, \'Meșter / Autor Anonim\'))))';
+        let photoExpr = 'PHOTO';
+
+        if (catKey === 'arme') {
+          titleExpr = 'TITLU';
+          locExpr = 'LOC_PAST';
+          creatorExpr = 'ISNULL(AUTOR, ATELIER)';
+        } else if (catKey === 'monede') {
+          titleExpr = 'ISNULL(NOMINAL, STAT_EMIT)';
+          creatorExpr = 'ISNULL(SUVERAN_EM, STAT_EMIT)';
+          descExpr = 'ISNULL(NOTE_CONS, TIP_AVERS)';
+          photoExpr = 'Photo';
+        } else if (catKey === 'ceramica') {
+          titleExpr = 'ISNULL(Titlu, ISNULL(TIP_SPECIF, TIP))';
+          locExpr = 'LOC_PAST';
+          creatorExpr = 'ISNULL(AUTOR, STAT_EMIT)';
+          photoExpr = 'Photo';
+        } else if (catKey === 'etnografie') {
+          titleExpr = 'TITLU';
+          locExpr = 'ISNULL(LOC_PASTR, LOC_PAST)';
+          creatorExpr = 'ISNULL(AUTOR, \'Meșter Tradițional\')';
+        } else if (catKey === 'medalie') {
+          titleExpr = 'TITLU';
+          locExpr = 'ISNULL(LOC_PASTR, LOC_PAST)';
+          creatorExpr = 'ISNULL(AUTOR, ISNULL(STAT_EMIT, ATELIER))';
+        } else if (catKey === 'portelan') {
+          locExpr = 'ISNULL(LOC_PASTR, LOC_PAST)';
+          creatorExpr = 'ISNULL(AUTOR, ATELIER)';
+        }
+
         const query = `
           SELECT TOP 50 
             ${meta.idCol} AS Id,
             '${catKey}' AS CategoryKey,
             '${meta.labelRo}' AS CategoryNameRo,
             '${meta.table}' AS TableName,
-            ISNULL(TITLU, DENUMIRE) AS Title,
-            DENUMIRE,
-            TITLU,
-            ISNULL(AUTOR, ISNULL(ATELIER, ISNULL(STAT_EMIT, ISNULL(PERSONALIT, 'Meșter / Autor Anonim')))) AS Creator,
+            ${titleExpr} AS Title,
+            ${creatorExpr} AS Creator,
             CASE 
               WHEN DATAT IS NOT NULL AND DATAT != '' THEN DATAT 
               WHEN AN_I IS NOT NULL THEN CAST(AN_I AS VARCHAR(10)) + CASE WHEN AN_S IS NOT NULL THEN ' - ' + CAST(AN_S AS VARCHAR(10)) ELSE '' END 
               WHEN SECOL_I IS NOT NULL THEN 'Secolul ' + CAST(SECOL_I AS VARCHAR(10))
               ELSE 'Nedatat' 
             END AS Period,
-            DESCRIERE AS Description,
+            ${descExpr} AS Description,
             MATERIAL,
             TEHNICA,
-            LOC_PASTR AS LocationInMuseum,
+            ${locExpr} AS LocationInMuseum,
             NR_INV,
             ISNULL(TEZAUR, FOND) AS Classification,
-            PHOTO,
+            ${photoExpr} AS PHOTO,
             HasPhoto
           FROM dbo.[${meta.table}]
           WHERE 1=1
