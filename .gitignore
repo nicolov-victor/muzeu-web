@@ -1,0 +1,10 @@
+node_modules/
+.env
+*.log
+.DS_Store
+Thumbs.db
+server/inspect_db.js
+server/check_all_tables.js
+server/check_counts.js
+server/extract_schema.js
+server/analyze_exhibits.js

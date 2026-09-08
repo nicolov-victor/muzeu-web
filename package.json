@@ -1,0 +1,17 @@
+{
+  "name": "museum-web-platform",
+  "version": "1.0.0",
+  "description": "Platforma moderna pentru muzeu cu prezentare 3D a exponatelor si suport SQL Server",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mssql": "^10.0.2"
+  }
+}

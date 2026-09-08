@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grand Musée Virtuel | Galeria de Patrimoniu Național</title>
+  <meta name="description" content="Platformă muzeală modernă pentru prezentarea și vizualizarea interactivă 3D a exponatelor, conectată direct la baza de date SQL Server 'muzeu'.">
+  
+  <!-- Fonturi Muzeale: Cinzel & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="museum-theme">
+  <!-- Fundal Dinamic cu Reflectoare Muzeale -->
+  <div class="ambient-spotlight spotlight-left"></div>
+  <div class="ambient-spotlight spotlight-right"></div>
+  <div class="ambient-noise"></div>
+
+  <!-- Header Muzeal de Lux (Exclusiv Vizualizare & Prezentare) -->
+  <header class="museum-header" id="mainHeader">
+    <div class="header-container">
+      <a href="#" class="museum-brand">
+        <div class="brand-crest">
+          <i class="fa-solid fa-landmark-dome"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">GRAND MUSÉE</span>
+          <span class="brand-subtitle">PATRIMONIU & TEZAUR DIGITAL</span>
+        </div>
+      </a>
+
+      <nav class="museum-nav">
+        <a href="#heroSection" class="nav-link active"><i class="fa-solid fa-cube"></i> Carusel 3D</a>
+        <a href="#gallerySection" class="nav-link"><i class="fa-solid fa-compass"></i> Colecții (12 Tabele)</a>
+        <a href="#architectureSection" class="nav-link"><i class="fa-solid fa-database"></i> Analiză Bază 'muzeu'</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="db-status-badge" id="dbStatusBadge" title="Stare Conexiune SQL Server">
+          <span class="status-indicator"></span>
+          <span class="status-label">Verificare SQL Server...</span>
+        </div>
+
+        <button class="ambient-audio-btn" id="ambientAudioBtn" title="Muzică ambientală de galerie">
+          <i class="fa-solid fa-volume-xmark" id="audioIcon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section: Carusel 3D Cinematografic al Exponatelor -->
+  <section class="hero-section" id="heroSection">
+    <div class="hero-header">
+      <div class="exhibition-pill">
+        <i class="fa-solid fa-shield-halved"></i> EXPOZIȚIE DE PATRIMONIU &bull; MOD VIZUALIZARE
+      </div>
+      <h1 class="hero-title">Tezaurul Cultural & Istoric</h1>
+      <p class="hero-description">
+        Prezentare interactivă de înaltă fidelitate conectată direct la baza de date <strong>muzeu</strong>. Fiecare categorie este extrasă din tabelul său dedicat (Cărți, Icoane, Arme, Monede, Ceramică, Documente și multe altele).
+      </p>
+    </div>
+
+    <!-- Containerul Caruselului 3D cu Adâncime (Depth Perspective) -->
+    <div class="carousel-3d-stage">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-loading">
+          <div class="spinner"></div>
+          <span>Se extrag capodoperele din tabelele bazei de date...</span>
+        </div>
+      </div>
+
+      <!-- Controale Navigare Carusel -->
+      <button class="carousel-ctrl prev-ctrl" id="prevSlideBtn" aria-label="Exponatul anterior">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="carousel-ctrl next-ctrl" id="nextSlideBtn" aria-label="Exponatul următor">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Bara de Control a Caruselului -->
+    <div class="carousel-dashboard">
+      <div class="carousel-indicators" id="carouselIndicators"></div>
+      <div class="carousel-actions">
+        <button class="ctrl-icon-btn" id="toggleAutoplayBtn" title="Pauză / Redare rotire automată">
+          <i class="fa-solid fa-pause"></i>
+        </button>
+        <div class="slide-counter" id="slideCounter">1 / 6</div>
+        <button class="ctrl-icon-btn" id="inspectActiveSlideBtn" title="Fișă Tehnică Exponat">
+          <i class="fa-solid fa-magnifying-glass-plus"></i> Inspecție Detaliată
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secțiune: Galeria Completă cu Filtrare pe cele 12 Tabele Reale -->
+  <section class="gallery-section" id="gallerySection">
+    <div class="section-container">
+      <div class="section-heading">
+        <div class="heading-meta">
+          <span class="section-badge"><i class="fa-solid fa-layer-group"></i> INVENTAR PATRIMONIU</span>
+          <h2 class="section-title">Cele 12 Colecții ale Muzeului</h2>
+          <p class="section-subtitle">
+            Date structurate pe tabelele reale din baza de date <code>muzeu</code> (Server: NICOLOV).
+          </p>
+        </div>
+
+        <!-- Căutare Instantanee -->
+        <div class="search-box">
+          <i class="fa-solid fa-search search-icon"></i>
+          <input type="text" id="exhibitSearchInput" placeholder="Caută după denumire, autor, număr inventar, material..." autocomplete="off">
+          <button class="clear-search-btn" id="clearSearchBtn" style="display: none;">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bare de Filtrare pe cele 12 Tabele din Baza de Date -->
+      <div class="table-filter-bar" id="categoryFilterBar">
+        <button class="filter-tab active" data-category="all">
+          <i class="fa-solid fa-border-all"></i>
+          <span>Toate Colecțiile</span>
+        </button>
+        <button class="filter-tab" data-category="carte">
+          <i class="fa-solid fa-book-open"></i>
+          <span>Cărți Vechi <small>(dbo.Carte)</small></span>
+        </button>
+        <button class="filter-tab" data-category="icoane">
+          <i class="fa-solid fa-cross"></i>
+          <span>Icoane <small>(dbo.Icoane)</small></span>
+        </button>
+        <button class="filter-tab" data-category="arme">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Arme <small>(dbo.Arme)</small></span>
+        </button>
+        <button class="filter-tab" data-category="monede">
+          <i class="fa-solid fa-coins"></i>
+          <span>Monede <small>(dbo.Monede)</small></span>
+        </button>
+        <button class="filter-tab" data-category="ceramica">
+          <i class="fa-solid fa-jar"></i>
+          <span>Ceramică <small>(dbo.Ceramica)</small></span>
+        </button>
+        <button class="filter-tab" data-category="documente">
+          <i class="fa-solid fa-scroll"></i>
+          <span>Documente <small>(dbo.Documente)</small></span>
+        </button>
+        <button class="filter-tab" data-category="fotografie">
+          <i class="fa-solid fa-camera-retro"></i>
+          <span>Fotografie <small>(dbo.Fotografie)</small></span>
+        </button>
+        <button class="filter-tab" data-category="etnografie">
+          <i class="fa-solid fa-vest-patches"></i>
+          <span>Etnografie <small>(dbo.Etnografie)</small></span>
+        </button>
+        <button class="filter-tab" data-category="medalie">
+          <i class="fa-solid fa-medal"></i>
+          <span>Medalii <small>(dbo.Medalie)</small></span>
+        </button>
+        <button class="filter-tab" data-category="portelan">
+          <i class="fa-solid fa-utensils"></i>
+          <span>Porțelan <small>(dbo.Portelan)</small></span>
+        </button>
+        <button class="filter-tab" data-category="afise">
+          <i class="fa-solid fa-image"></i>
+          <span>Afișe <small>(dbo.Afise)</small></span>
+        </button>
+        <button class="filter-tab" data-category="istorie">
+          <i class="fa-solid fa-landmark-flag"></i>
+          <span>Istorie <small>(dbo.Istorie)</small></span>
+        </button>
+      </div>
+
+      <!-- Grid-ul Exponatelor -->
+      <div class="exhibits-grid" id="exhibitsGrid">
+        <!-- Render dinamic via JavaScript -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <i class="fa-regular fa-folder-open empty-icon"></i>
+        <h3>Niciun exponat găsit</h3>
+        <p>Nu s-au găsit piese conform filtrelor sau căutării curente.</p>
+        <button class="btn btn-outline" id="resetFiltersBtn">Resetează Filtrele</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secțiune: Analiza Arhitecturii Bazei de Date 'muzeu' -->
+  <section class="architecture-section" id="architectureSection">
+    <div class="section-container">
+      <div class="architecture-card">
+        <div class="arch-header">
+          <div class="arch-badge"><i class="fa-solid fa-database"></i> RAPORT ANALIZĂ SQL SERVER</div>
+          <h2 class="arch-title">Structura Bazei de Date [muzeu]</h2>
+          <p class="arch-desc">
+            Baza de date conține <strong>42 de tabele</strong> conform standardului de evidență muzeală (DocPat / CIMEC). Dintre acestea, <strong>12 tabele reprezintă tipuri distincte de exponate</strong>, completate de 30 de tabele nomenclator (Dictionar, LocPastrare, Material, Tehnica, StareConservare, Epoca etc.).
+          </p>
+        </div>
+
+        <div class="arch-grid">
+          <div class="arch-col">
+            <div class="table-card">
+              <div class="table-header">
+                <i class="fa-solid fa-book-open text-gold"></i>
+                <span class="table-name">dbo.Carte</span>
+              </div>
+              <ul class="table-fields">
+                <li><code>Id_Carte</code> (Cheie primară)</li>
+                <li><code>TITLU, DENUMIRE, AUTOR</code></li>
+                <li><code>EDITURA, LOC_APAR, AN_APAR, NR_PAG</code></li>
+                <li><code>PHOTO (varbinary(max)), HasPhoto</code></li>
+              </ul>
+            </div>
+
+            <div class="table-card">
+              <div class="table-header">
+                <i class="fa-solid fa-cross text-gold"></i>
+                <span class="table-name">dbo.Icoane</span>
+              </div>
+              <ul class="table-fields">
+                <li><code>Id_Icoane</code> (Cheie primară)</li>
+                <li><code>SCOALA, TEMA, ICONOGRAFIE</code></li>
+                <li><code>MATERIAL, TEHNICA, RAMA</code></li>
+                <li><code>STARE_CONS, NOTE_CONS, TEZAUR</code></li>
+              </ul>
+            </div>
+
+            <div class="table-card">
+              <div class="table-header">
+                <i class="fa-solid fa-shield-halved text-gold"></i>
+                <span class="table-name">dbo.Arme</span>
+              </div>
+              <ul class="table-fields">
+                <li><code>Id_Arme</code> (Cheie primară)</li>
+                <li><code>CALIBRU, MECANISM, SERIE, TEACA</code></li>
+                <li><code>MATERIAL, TEHNICA, LUNGIME, LATIME</code></li>
+                <li><code>NR_INV, CLASAT, TEZAUR, FOND</code></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="arch-col">
+            <div class="table-card">
+              <div class="table-header">
+                <i class="fa-solid fa-coins text-gold"></i>
+                <span class="table-name">dbo.Monede</span>
+              </div>
+              <ul class="table-fields">
+                <li><code>Id_Monede</code> (Cheie primară)</li>
+                <li><code>EMITENT, VALOARE, NOMINAL</code></li>
+                <li><code>DIAMETRU, GREUTATE, TITLU_METAL</code></li>
+                <li><code>AVERS, REVERS, LEGENDA_AV, LEGENDA_RV</code></li>
+              </ul>
+            </div>
+
+            <div class="table-card">
+              <div class="table-header">
+                <i class="fa-solid fa-jar text-gold"></i>
+                <span class="table-name">dbo.Ceramica</span>
+              </div>
+              <ul class="table-fields">
+                <li><code>Id_Ceramica</code> (Cheie primară)</li>
+                <li><code>DIAMETRU_B, DIAMETRU_G, DIAMETRU_M</code></li>
+                <li><code>CAPACITATE, PASTA, MOTIVE_DECOR</code></li>
+                <li><code>LOC_DESCOPERIRE, CULTURA, EPOCA</code></li>
+              </ul>
+            </div>
+
+            <div class="table-card">
+              <div class="table-header">
+                <i class="fa-solid fa-scroll text-gold"></i>
+                <span class="table-name">dbo.Documente</span>
+              </div>
+              <ul class="table-fields">
+                <li><code>Id_Documente</code> (Cheie primară)</li>
+                <li><code>EMITENT, DESTINATAR, LIMBA</code></li>
+                <li><code>SIGILII, NR_FILE, ANEXE</code></li>
+                <li><code>DATA_INTOC, CIRC_PIESE, SEMNIFIC</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="arch-footer">
+          <div class="arch-status-info">
+            <i class="fa-solid fa-lock text-green"></i>
+            <span>Securitate: Modul de scriere este <strong>dezactivat</strong>. Datele sunt securizate și protejate împotriva modificărilor din interfață.</span>
+          </div>
+          <div class="db-status-badge online">
+            <span class="status-indicator"></span>
+            <span>Server: NICOLOV &bull; Bază: muzeu (Port: 52969)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal: Spotlight de Inspecție Detaliată a Exponatului -->
+  <div class="modal-backdrop" id="detailModal">
+    <div class="modal-dialog museum-modal">
+      <button class="modal-close-btn" id="closeDetailModalBtn" aria-label="Închide">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-content" id="detailModalBody">
+        <!-- Conținutul detaliat este injectat dinamic din baza de date -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Player Bar Minimalist pentru Tur Ghidat -->
+  <div class="audio-tour-bar" id="audioTourBar" style="display: none;">
+    <div class="tour-info">
+      <div class="tour-waves">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="tour-text">
+        <span class="tour-badge">GHID AUDIO MUZEAL</span>
+        <span class="tour-title" id="tourExhibitTitle">Titlu exponat...</span>
+      </div>
+    </div>
+    <div class="tour-controls">
+      <button class="tour-btn" id="tourPlayPauseBtn">
+        <i class="fa-solid fa-pause"></i>
+      </button>
+      <button class="tour-btn tour-close" id="tourCloseBtn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer Muzeal -->
+  <footer class="museum-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="brand-crest">
+          <i class="fa-solid fa-landmark-dome"></i>
+        </div>
+        <div>
+          <div class="footer-title">GRAND MUSÉE VIRTUEL</div>
+          <div class="footer-desc">Platformă de prezentare a patrimoniului cultural conectată direct la baza de date relațională Microsoft SQL Server.</div>
+        </div>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 Grand Musée Virtuel &bull; Baza de date: muzeu &bull; Server: NICOLOV
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
