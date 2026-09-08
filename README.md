@@ -1,7 +1,7 @@
-# Grand Musée Virtuel 🏛️
-### Platformă Web Modernă pentru Prezentarea Patrimoniului Muzeal & Arhitectură SQL Server
+# Muzeul Național de Istorie a Moldovei 🏛️
+### Galeria Digitală 3D de Patrimoniu & Prezentare SQL Server (Chișinău)
 
-Platformă web modernă de prezentare vizuală a patrimoniului muzeal, concepută cu o estetică **Dark Luxury Museum**, carusel cinematografic 3D (Coverflow Depth) și conectivitate directă la **Microsoft SQL Server** pe baza de date relațională `muzeu`.
+Platformă web modernă de prezentare vizuală a patrimoniului **Muzeului Național de Istorie a Moldovei** ([nationalmuseum.md](https://www.nationalmuseum.md/ro/)), concepută cu o estetică **Dark Luxury Museum**, carusel cinematografic 3D (Coverflow Depth) și conectivitate directă la **Microsoft SQL Server** pe baza de date relațională `muzeu`.
 
 Sistemul este configurat în mod **Strict Read-Only** (exclusiv vizualizare și prezentare de patrimoniu, fără riscul modificării sau alterării datelor din baza de date).
 
