@@ -423,10 +423,36 @@ export async function getAllUnified(categoryFilter = null, search = null) {
   return allResults;
 }
 
-// Exponate Featured pentru Caruselul 3D
+// Exponate Featured pentru Caruselul 3D (Selecție diversificată din toate colecțiile)
 export async function getFeaturedExhibits() {
   const all = await getAllUnified('all');
-  return all.slice(0, 8);
+  if (!all || all.length === 0) return [];
+
+  // Grupăm pe colecții pentru ca în carusel să apară piese din categorii variate
+  const byCategory = {};
+  for (const item of all) {
+    if (!byCategory[item.CategoryKey]) byCategory[item.CategoryKey] = [];
+    byCategory[item.CategoryKey].push(item);
+  }
+
+  const featured = [];
+  const catKeys = Object.keys(byCategory);
+
+  // Pasul 1: Adăugăm primul exponat reprezentativ din fiecare colecție
+  for (const catKey of catKeys) {
+    if (byCategory[catKey].length > 0) {
+      featured.push(byCategory[catKey][0]);
+    }
+  }
+
+  // Pasul 2: Completăm până la 10-12 exponate cu al doilea exponat din fiecare colecție
+  for (const catKey of catKeys) {
+    if (byCategory[catKey].length > 1 && featured.length < 12) {
+      featured.push(byCategory[catKey][1]);
+    }
+  }
+
+  return featured.length > 0 ? featured : all.slice(0, 8);
 }
 
 // Detalii complete ale unui exponat direct din tabelul său specific

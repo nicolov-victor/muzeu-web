@@ -37,8 +37,7 @@
 
       <nav class="museum-nav">
         <a href="#heroSection" class="nav-link active"><i class="fa-solid fa-cube"></i> Carusel 3D</a>
-        <a href="#gallerySection" class="nav-link"><i class="fa-solid fa-compass"></i> Colecții (12 Tabele)</a>
-        <a href="#architectureSection" class="nav-link"><i class="fa-solid fa-database"></i> Analiză Bază 'muzeu'</a>
+        <a href="#gallerySection" class="nav-link"><i class="fa-solid fa-compass"></i> Colecțiile Muzeului</a>
       </nav>
 
       <div class="header-actions">
@@ -192,115 +191,7 @@
     </div>
   </section>
 
-  <!-- Secțiune: Analiza Arhitecturii Bazei de Date 'muzeu' -->
-  <section class="architecture-section" id="architectureSection">
-    <div class="section-container">
-      <div class="architecture-card">
-        <div class="arch-header">
-          <div class="arch-badge"><i class="fa-solid fa-database"></i> RAPORT ANALIZĂ SQL SERVER</div>
-          <h2 class="arch-title">Structura Bazei de Date [muzeu]</h2>
-          <p class="arch-desc">
-            Baza de date conține <strong>42 de tabele</strong> conform standardului de evidență muzeală (DocPat / CIMEC). Dintre acestea, <strong>12 tabele reprezintă tipuri distincte de exponate</strong>, completate de 30 de tabele nomenclator (Dictionar, LocPastrare, Material, Tehnica, StareConservare, Epoca etc.).
-          </p>
-        </div>
 
-        <div class="arch-grid">
-          <div class="arch-col">
-            <div class="table-card">
-              <div class="table-header">
-                <i class="fa-solid fa-book-open text-gold"></i>
-                <span class="table-name">dbo.Carte</span>
-              </div>
-              <ul class="table-fields">
-                <li><code>Id_Carte</code> (Cheie primară)</li>
-                <li><code>TITLU, DENUMIRE, AUTOR</code></li>
-                <li><code>EDITURA, LOC_APAR, AN_APAR, NR_PAG</code></li>
-                <li><code>PHOTO (varbinary(max)), HasPhoto</code></li>
-              </ul>
-            </div>
-
-            <div class="table-card">
-              <div class="table-header">
-                <i class="fa-solid fa-cross text-gold"></i>
-                <span class="table-name">dbo.Icoane</span>
-              </div>
-              <ul class="table-fields">
-                <li><code>Id_Icoane</code> (Cheie primară)</li>
-                <li><code>SCOALA, TEMA, ICONOGRAFIE</code></li>
-                <li><code>MATERIAL, TEHNICA, RAMA</code></li>
-                <li><code>STARE_CONS, NOTE_CONS, TEZAUR</code></li>
-              </ul>
-            </div>
-
-            <div class="table-card">
-              <div class="table-header">
-                <i class="fa-solid fa-shield-halved text-gold"></i>
-                <span class="table-name">dbo.Arme</span>
-              </div>
-              <ul class="table-fields">
-                <li><code>Id_Arme</code> (Cheie primară)</li>
-                <li><code>CALIBRU, MECANISM, SERIE, TEACA</code></li>
-                <li><code>MATERIAL, TEHNICA, LUNGIME, LATIME</code></li>
-                <li><code>NR_INV, CLASAT, TEZAUR, FOND</code></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="arch-col">
-            <div class="table-card">
-              <div class="table-header">
-                <i class="fa-solid fa-coins text-gold"></i>
-                <span class="table-name">dbo.Monede</span>
-              </div>
-              <ul class="table-fields">
-                <li><code>Id_Monede</code> (Cheie primară)</li>
-                <li><code>EMITENT, VALOARE, NOMINAL</code></li>
-                <li><code>DIAMETRU, GREUTATE, TITLU_METAL</code></li>
-                <li><code>AVERS, REVERS, LEGENDA_AV, LEGENDA_RV</code></li>
-              </ul>
-            </div>
-
-            <div class="table-card">
-              <div class="table-header">
-                <i class="fa-solid fa-jar text-gold"></i>
-                <span class="table-name">dbo.Ceramica</span>
-              </div>
-              <ul class="table-fields">
-                <li><code>Id_Ceramica</code> (Cheie primară)</li>
-                <li><code>DIAMETRU_B, DIAMETRU_G, DIAMETRU_M</code></li>
-                <li><code>CAPACITATE, PASTA, MOTIVE_DECOR</code></li>
-                <li><code>LOC_DESCOPERIRE, CULTURA, EPOCA</code></li>
-              </ul>
-            </div>
-
-            <div class="table-card">
-              <div class="table-header">
-                <i class="fa-solid fa-scroll text-gold"></i>
-                <span class="table-name">dbo.Documente</span>
-              </div>
-              <ul class="table-fields">
-                <li><code>Id_Documente</code> (Cheie primară)</li>
-                <li><code>EMITENT, DESTINATAR, LIMBA</code></li>
-                <li><code>SIGILII, NR_FILE, ANEXE</code></li>
-                <li><code>DATA_INTOC, CIRC_PIESE, SEMNIFIC</code></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="arch-footer">
-          <div class="arch-status-info">
-            <i class="fa-solid fa-lock text-green"></i>
-            <span>Securitate: Modul de scriere este <strong>dezactivat</strong>. Datele sunt securizate și protejate împotriva modificărilor din interfață.</span>
-          </div>
-          <div class="db-status-badge online">
-            <span class="status-indicator"></span>
-            <span>Server: NICOLOV &bull; Bază: muzeu (Port: 52969)</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Modal: Spotlight de Inspecție Detaliată a Exponatului -->
   <div class="modal-backdrop" id="detailModal">
